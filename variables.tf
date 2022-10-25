@@ -7,13 +7,13 @@ variable "company" {
 variable "project" {
   type        = string
   description = "Project name for resource tagging"
-  default = "wordpress"
+  default     = "wordpress"
 }
 
 variable "enviroment" {
   type        = string
   description = "Environment name for resource tagging"
-  default = "staging"
+  default     = "staging"
 }
 
 variable "vpc_configuration" {

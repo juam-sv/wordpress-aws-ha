@@ -34,7 +34,7 @@ resource "aws_subnet" "this_data" {
 }
 
 #------------------- NAT GATEWAY CREATION --------------------------------------------------
-resource "aws_nat_gateway" "this" {
+resource "aws_nat_gateway" "net_gateway_subnet_app" {
   for_each = toset(local.subnets_app)
 
   allocation_id = aws_eip.nat_gateway[each.value].id
@@ -75,7 +75,7 @@ resource "aws_route" "nat_gateway" {
 
   destination_cidr_block = "0.0.0.0/0"
   route_table_id         = aws_route_table.private[each.value].id
-  nat_gateway_id         = aws_nat_gateway.this[each.value].id
+  nat_gateway_id         = aws_nat_gateway.net_gateway_subnet_app[each.value].id
 }
 
 resource "aws_route_table_association" "private" {
