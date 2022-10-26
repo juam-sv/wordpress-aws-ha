@@ -16,6 +16,12 @@ variable "enviroment" {
   default     = "staging"
 }
 
+variable "ec2_sg_ingress_ports" {
+  type        = list(number)
+  description = "Inbound SG ports to be opened"
+  default     = [22, 80, 443]
+}
+
 variable "vpc_configuration" {
   type = object({
     cidr_block = string
