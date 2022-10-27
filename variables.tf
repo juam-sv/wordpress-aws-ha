@@ -14,7 +14,7 @@ variable "ec_nodes_count" {
 variable "ec_az_mode" {
   type        = string
   description = "Specifies whether the nodes is going to be created across azs or in a single az"
-  default = "cross-az"
+  default     = "cross-az"
 
   validation {
     condition     = var.ec_az_mode == "cross-az" || var.ec_az_mode == "single-az"
