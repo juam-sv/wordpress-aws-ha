@@ -2,8 +2,8 @@
 resource "aws_autoscaling_group" "asg_wordpress" {
   name             = "${aws_launch_configuration.lc_wordpress.name}-asg"
   min_size         = 1
-  desired_capacity = 1
-  max_size         = 2
+  desired_capacity = 2
+  max_size         = 4
 
   health_check_type = "ELB"
   load_balancers = [

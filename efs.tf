@@ -22,11 +22,4 @@ resource "aws_efs_mount_target" "wordpress_mount_targets" {
   file_system_id  = aws_efs_file_system.wordpress_fs.id
   subnet_id       = aws_subnet.this[local.subnet_pairs[each.value]].id
   security_groups = [aws_security_group.efs_sg.id]
-
-    tags = merge(
-    local.common_tags,
-    {
-      Name = "efs_mount_target"
-    }
-  )
 }
