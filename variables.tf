@@ -2,10 +2,8 @@
 variable "cluster_identifier" {
   type        = string
   description = "Company name for resource tagging"
-  default     = "wordpress_db_cluster"
+  default     = "wordpress-db-cluster"
 }
-
-
 
 variable "db_engine" {
   description = "The database engine"
