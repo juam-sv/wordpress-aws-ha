@@ -8,7 +8,7 @@ variable "lc_image_id" {
   description = "Launch configuration image id"
   default     = "ami-087c17d1fe0178315"
 }
-  
+
 variable "lc_instance_type" {
   description = "Launch configuration instance type"
   default     = "t2.micro"
