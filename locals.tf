@@ -1,12 +1,4 @@
 locals {
-  common_tags = {
-    company    = var.company
-    project    = "${var.company}-${var.project}"
-    enviroment = "${var.project}-${var.enviroment}"
-  }
-}
-
-locals {
   subnets_app           = sort([for subnet in var.vpc_configuration.subnets : subnet.name if subnet.public == false])
   subnets_data          = sort([for subnet in var.vpc_configuration.subnets_data : subnet.name if subnet.public == false])
   public_subnets        = sort([for subnet in var.vpc_configuration.subnets : subnet.name if subnet.public == true])
@@ -19,4 +11,19 @@ locals {
     zipmap(local.subnets_app, local.azs),
     zipmap(local.subnets_data, local.azs)
   )
+
+  s3_bucket_name = "wordpress-${random_integer.rand.result}"
+}
+
+resource "random_integer" "rand" {
+  min = 10000
+  max = 99999
+}
+
+locals {
+  common_tags = {
+    company    = var.company
+    project    = "${var.company}-${var.project}"
+    enviroment = "${var.project}-${var.enviroment}"
+  }
 }

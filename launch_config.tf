@@ -5,6 +5,7 @@ resource "aws_launch_configuration" "lc_wordpress" { #web
   key_name                    = var.lc_key_name
   security_groups             = ["${aws_security_group.sg_http_and_ssh.id}"]
   associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.wordpress_profile.name
   user_data                   = file("data.sh")
   lifecycle {
     create_before_destroy = true
