@@ -1,3 +1,24 @@
+# ----------------------- LAUNCH CONFIGURATION -----------------------
+variable "lc_name_prefix" {
+  description = "Launch configuration prefix name"
+  default     = "wordpress-"
+}
+
+variable "lc_image_id" {
+  description = "Launch configuration image id"
+  default     = "ami-087c17d1fe0178315"
+}
+  
+variable "lc_instance_type" {
+  description = "Launch configuration instance type"
+  default     = "t2.micro"
+}
+
+variable "lc_key_name" {
+  description = "Launch configuration key name"
+  default     = "madra"
+}
+
 # ----------------------- RDS ----------------------------------------
 variable "cluster_identifier" {
   type        = string
