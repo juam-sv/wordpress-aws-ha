@@ -1,3 +1,33 @@
+# ----------------------- ELASTIC CACHE -------------------------------
+variable "ec_node_type" {
+  description = "The instance type for each node in the cluster"
+  type        = string
+  default     = "cache.t2.medium"
+}
+
+variable "ec_nodes_count" {
+  description = "Number of nodes in the cluster"
+  type        = number
+  default     = 2
+}
+
+variable "ec_az_mode" {
+  type        = string
+  description = "Specifies whether the nodes is going to be created across azs or in a single az"
+  default     = "cross-az"
+
+  validation {
+    condition     = var.ec_az_mode == "cross-az" || var.ec_az_mode == "single-az"
+    error_message = "The az_mode value can only be 'cross-az' or 'single-az'."
+  }
+}
+
+variable "ec_memcached_port" {
+  description = "The Memcache port that the nodes will be listing on"
+  type        = number
+  default     = 11211
+}
+
 # ----------------------- LAUNCH CONFIGURATION -----------------------
 variable "lc_name_prefix" {
   description = "Launch configuration prefix name"

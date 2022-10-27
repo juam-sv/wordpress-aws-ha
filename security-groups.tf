@@ -51,11 +51,31 @@ resource "aws_security_group" "sg_db_cluster" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    from_port       = var.db_port
-    to_port         = var.db_port
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_http_and_ssh.id]
-    cidr_blocks     = ["${aws_subnet.this_data["data-a"].id}", "${aws_subnet.this_data["data-b"].id}"]
+    from_port   = var.db_port
+    to_port     = var.db_port
+    protocol    = "tcp"
+    cidr_blocks = ["${aws_subnet.this["app-a"].cidr_block}", "${aws_subnet.this["app-b"].cidr_block}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# -------------------- ELASTICACHE SECURITY GROUP --------------------
+resource "aws_security_group" "sg_memcached" {
+  name        = "sg_memcached"
+  description = "Opening memcached port for wordpress autoscaling group security group"
+  vpc_id      = aws_vpc.this.id
+
+  ingress {
+    from_port   = var.ec_memcached_port
+    to_port     = var.ec_memcached_port
+    protocol    = "tcp"
+    cidr_blocks = ["${aws_subnet.this["app-a"].cidr_block}", "${aws_subnet.this["app-b"].cidr_block}"]
   }
 
   egress {
