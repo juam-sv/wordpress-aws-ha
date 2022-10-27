@@ -1,0 +1,65 @@
+cluster_identifier   = "wordpress-db-cluster"
+company              = "noticias-da-nuvem"
+db_allocated_storage = 10
+db_engine            = "mysql"
+db_engine_version    = "8.0.28"
+db_instance_class    = "db.t2.micro"
+db_master_password   = "supersenha123"
+db_master_username   = "wordpress"
+db_name              = "wordpress"
+db_port              = "3306"
+db_storage_type      = "gp2"
+ec2_sg_ingress_ports = [
+  22,
+  80,
+  443
+]
+ec_az_mode           = "cross-az"
+ec_memcached_port    = 11211
+ec_node_type         = "cache.t2.medium"
+ec_nodes_count       = 2
+enviroment           = "staging"
+lc_image_id          = "ami-087c17d1fe0178315"
+lc_instance_type     = "t2.micro"
+lc_key_name          = "aws_ssh_key"
+lc_name_prefix       = "wordpress-"
+parameter_group_name = "default.mysql5.7"
+project              = "wordpress"
+skip_final_snapshot  = true
+vpc_configuration = {
+  "cidr_block": "10.0.0.0/16",
+  "subnets": [
+    {
+      "cidr_block": "10.0.0.0/19",
+      "name": "app-a",
+      "public": false
+    },
+    {
+      "cidr_block": "10.0.32.0/19",
+      "name": "app-b",
+      "public": false
+    },
+    {
+      "cidr_block": "10.0.128.0/19",
+      "name": "public-a",
+      "public": true
+    },
+    {
+      "cidr_block": "10.0.160.0/19",
+      "name": "public-b",
+      "public": true
+    }
+  ],
+  "subnets_data": [
+    {
+      "cidr_block": "10.0.64.0/19",
+      "name": "data-a",
+      "public": false
+    },
+    {
+      "cidr_block": "10.0.192.0/19",
+      "name": "data-b",
+      "public": false
+    }
+  ]
+}
