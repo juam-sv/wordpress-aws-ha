@@ -55,9 +55,7 @@ resource "aws_security_group" "sg_db_cluster" {
     to_port         = var.db_port
     protocol        = "tcp"
     security_groups = [aws_security_group.sg_http_and_ssh.id]
-    cidr_blocks     = ["${aws_subnet.this["public-a"].id}", "${aws_subnet.this["public-b"].id}"]
-
-
+    cidr_blocks     = ["${aws_subnet.this_data["data-a"].id}", "${aws_subnet.this_data["data-b"].id}"]
   }
 
   egress {
