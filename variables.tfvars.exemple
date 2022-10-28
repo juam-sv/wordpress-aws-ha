@@ -1,31 +1,41 @@
-cluster_identifier   = "wordpress-db-cluster"
-company              = "noticias-da-nuvem"
-db_allocated_storage = 10
-db_engine            = "mysql"
-db_engine_version    = "8.0.28"
-db_instance_class    = "db.t2.micro"
-db_master_password   = "supersenha123"
-db_master_username   = "wordpress"
-db_name              = "wordpress"
-db_port              = "3306"
-db_storage_type      = "gp2"
+asg_bastion_desired_capacity   = 1
+asg_bastion_max_size           = 2
+asg_bastion_min_size           = 1
+asg_bastion_name               = "asg-bastion"
+asg_wordpress_desired_capacity = 2
+asg_wordpress_max_size         = 4
+asg_wordpress_min_size         = 1
+cluster_identifier             = "wordpress-db-cluster"
+company                        = "noticias-da-nuvem"
+db_allocated_storage           = 100
+db_engine                      = "mysql"
+db_engine_version              = "8.0.28"
+db_instance_class              = "db.m4.xlarge"
+db_master_password             = "supersenha123"
+db_master_username             = "wordpress"
+db_name                        = "wordpress"
+db_port                        = "3306"
+db_storage_type                = "gp2"
 ec2_sg_ingress_ports = [
   22,
   80,
   443
 ]
-ec_az_mode           = "cross-az"
-ec_memcached_port    = 11211
-ec_node_type         = "cache.t2.medium"
-ec_nodes_count       = 2
-enviroment           = "staging"
-lc_image_id          = "ami-087c17d1fe0178315"
-lc_instance_type     = "t2.micro"
-lc_key_name          = "aws_ssh_key"
-lc_name_prefix       = "wordpress-"
-parameter_group_name = "default.mysql5.7"
-project              = "wordpress"
-skip_final_snapshot  = true
+ec_az_mode               = "cross-az"
+ec_memcached_port        = 11211
+ec_node_type             = "cache.t2.small"
+ec_nodes_count           = 2
+enviroment               = "staging"
+lc_bastion_instance_type = "t2.micro"
+lc_bastion_key_name      = "madra"
+lc_bastion_name_prefix   = "bastion-"
+lc_image_id              = "ami-087c17d1fe0178315"
+lc_instance_type         = "t3.medium"
+lc_key_name              = "madra"
+lc_name_prefix           = "wordpress-"
+parameter_group_name     = "default.mysql5.7"
+project                  = "wordpress"
+skip_final_snapshot      = true
 vpc_configuration = {
   "cidr_block": "10.0.0.0/16",
   "subnets": [

@@ -2,7 +2,7 @@
 variable "ec_node_type" {
   description = "The instance type for each node in the cluster"
   type        = string
-  default     = "cache.t2.medium"
+  default     = "cache.t2.small"
 }
 
 variable "ec_nodes_count" {
@@ -41,7 +41,7 @@ variable "lc_image_id" {
 
 variable "lc_instance_type" {
   description = "Launch configuration instance type"
-  default     = "t2.micro"
+  default     = "t3.medium"
 }
 
 variable "lc_key_name" {
@@ -53,7 +53,7 @@ variable "lc_key_name" {
 variable "asg_wordpress_desired_capacity" {
   type        = number
   description = "Auto Scaling Group name"
-  default     = 1
+  default     = 2
 }
 variable "asg_wordpress_min_size" {
   description = "Auto Scaling Group name"
@@ -119,7 +119,7 @@ variable "db_engine" {
 variable "db_allocated_storage" {
   description = "The amount of allocated storage."
   type        = number
-  default     = 10
+  default     = 100
 }
 variable "db_storage_type" {
   description = "type of the storage"
@@ -130,7 +130,7 @@ variable "db_storage_type" {
 variable "db_instance_class" {
   description = "The RDS instance class"
   type        = string
-  default     = "db.t2.micro"
+  default     = "db.m4.xlarge"
 }
 
 variable "parameter_group_name" {
