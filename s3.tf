@@ -99,6 +99,11 @@ resource "aws_s3_bucket" "web_bucket" {
 }
     POLICY
 
-  tags = local.common_tags
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "web_bucket"
+    }
+  )
 
 }

@@ -21,4 +21,11 @@ resource "aws_elb" "lb_wordpress" {
     instance_port     = "80"
     instance_protocol = "http"
   }
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "lb_wordpress"
+    }
+  )
 }

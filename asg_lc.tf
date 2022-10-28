@@ -1,9 +1,24 @@
+#------------------- LAUNCH CONFIGURATION ------------------------------------
+resource "aws_launch_configuration" "lc_wordpress" {
+  name_prefix                 = var.lc_name_prefix
+  image_id                    = var.lc_name_prefix
+  instance_type               = var.lc_instance_type
+  key_name                    = var.lc_key_name
+  security_groups             = ["${aws_security_group.sg_http_and_ssh.id}"]
+  associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.wordpress_profile.name
+  user_data                   = file("data.sh")
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 #------------------- AUTO SCALING GROUP -------------------------------------- 
 resource "aws_autoscaling_group" "asg_wordpress" {
-  name             = "${aws_launch_configuration.lc_wordpress.name}-asg"
-  min_size         = 1
-  desired_capacity = 2
-  max_size         = 4
+  name             = "asg-${aws_launch_configuration.lc_wordpress.name}"
+  min_size         = var.asg_wordpress_min_size
+  desired_capacity = var.asg_wordpress_desired_capacity
+  max_size         = var.asg_wordpress_max_size
 
   health_check_type = "ELB"
   load_balancers = [
@@ -19,8 +34,8 @@ resource "aws_autoscaling_group" "asg_wordpress" {
   ]
   metrics_granularity = "1Minute"
   vpc_zone_identifier = [
-    "${aws_subnet.this["public-a"].id}",
-    "${aws_subnet.this["public-b"].id}"
+    "${aws_subnet.this["app-a"].id}",
+    "${aws_subnet.this["app-b"].id}"
   ]
   lifecycle {
     create_before_destroy = true

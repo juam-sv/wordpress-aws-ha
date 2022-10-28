@@ -1,17 +1,14 @@
-resource "aws_security_group" "sg_http_and_ssh" {
-  name        = "http_and_ssh"
-  description = "Open http, https and ssh ports"
+# -------------------- BASTION HOST -------------------------
+resource "aws_security_group" "sg_bastion" {
+  name        = "bastion-sg"
+  description = "Bastion instance security groups to open SSH"
   vpc_id      = aws_vpc.this.id
 
-  dynamic "ingress" {
-    for_each = var.ec2_sg_ingress_ports
-    iterator = port
-    content {
-      from_port   = port.value
-      to_port     = port.value
-      protocol    = "tcp"
-      cidr_blocks = ["${var.vpc_configuration.cidr_block}"] #verificar
-    }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -76,6 +73,30 @@ resource "aws_security_group" "sg_memcached" {
     to_port     = var.ec_memcached_port
     protocol    = "tcp"
     cidr_blocks = ["${aws_subnet.this["app-a"].cidr_block}", "${aws_subnet.this["app-b"].cidr_block}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "sg_http_and_ssh" {
+  name        = "http_and_ssh"
+  description = "Open http, https and ssh ports"
+  vpc_id      = aws_vpc.this.id
+
+  dynamic "ingress" {
+    for_each = var.ec2_sg_ingress_ports
+    iterator = port
+    content {
+      from_port   = port.value
+      to_port     = port.value
+      protocol    = "tcp"
+      cidr_blocks = ["${var.vpc_configuration.cidr_block}"]
+    }
   }
 
   egress {

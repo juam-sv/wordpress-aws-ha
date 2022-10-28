@@ -2,7 +2,12 @@ resource "aws_db_subnet_group" "wordpress_db_subnets" {
   name       = "wordpress_db_subnets"
   subnet_ids = [aws_subnet.this_data["data-a"].id, aws_subnet.this_data["data-b"].id]
 
-  tags = local.common_tags
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "wordpress_db_subnets"
+    }
+  )
 }
 
 resource "aws_rds_cluster" "wordpress_db_cluster" {
@@ -24,6 +29,12 @@ resource "aws_rds_cluster" "wordpress_db_cluster" {
   allocated_storage         = var.db_allocated_storage
   db_cluster_instance_class = var.db_instance_class
 
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "wordpress_db_cluster"
+    }
+  )
 }
 
 resource "aws_rds_cluster_instance" "wordpress_cluster_instances" {
@@ -35,5 +46,12 @@ resource "aws_rds_cluster_instance" "wordpress_cluster_instances" {
   engine_version       = aws_rds_cluster.wordpress_db_cluster.engine_version
   publicly_accessible  = false
   db_subnet_group_name = aws_rds_cluster.wordpress_db_cluster.db_subnet_group_name
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "wordpress_cluster_instances"
+    }
+  )
 }
 
