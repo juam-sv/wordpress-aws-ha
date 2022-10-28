@@ -28,7 +28,7 @@ variable "ec_memcached_port" {
   default     = 11211
 }
 
-# ----------------------- LAUNCH CONFIGURATION -----------------------
+# ----------------------- LAUNCH CONFIGURATION FOR WORDPRESS-----------
 variable "lc_name_prefix" {
   description = "Launch configuration prefix name"
   default     = "wordpress-"
@@ -47,6 +47,61 @@ variable "lc_instance_type" {
 variable "lc_key_name" {
   description = "Launch configuration key name"
   default     = "madra"
+}
+
+# ----------------------- ASG FOR WORDPRESS ----------------------------
+variable "asg_wordpress_desired_capacity" {
+  type        = number
+  description = "Auto Scaling Group name"
+  default     = 1
+}
+variable "asg_wordpress_min_size" {
+  description = "Auto Scaling Group name"
+  default     = 1
+  type        = number
+}
+variable "asg_wordpress_max_size" {
+  description = "Auto Scaling Group name"
+  default     = 4
+  type        = number
+}
+
+# ----------------------- LAUNCH CONFIGURATION FOR BASTION -----------
+variable "lc_bastion_name_prefix" {
+  description = "Launch configuration prefix name"
+  default     = "bastion-"
+}
+
+variable "lc_bastion_instance_type" {
+  description = "Launch configuration instance type"
+  default     = "t2.micro"
+}
+
+variable "lc_bastion_key_name" {
+  description = "Launch configuration key name"
+  default     = "madra"
+}
+
+# ----------------------- ASG FOR BASTION ----------------------------
+variable "asg_bastion_name" {
+  description = "Auto Scaling Group name"
+  default     = "asg-bastion"
+  type        = string
+}
+variable "asg_bastion_desired_capacity" {
+  type        = number
+  description = "Auto Scaling Group name"
+  default     = 1
+}
+variable "asg_bastion_min_size" {
+  description = "Auto Scaling Group name"
+  default     = 1
+  type        = number
+}
+variable "asg_bastion_max_size" {
+  description = "Auto Scaling Group name"
+  default     = 2
+  type        = number
 }
 
 # ----------------------- RDS ----------------------------------------
