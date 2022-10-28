@@ -1,6 +1,13 @@
 resource "aws_elasticache_subnet_group" "memcached_subnet_group" {
   name       = "memcached-subnet-group"
   subnet_ids = ["${aws_subnet.this_data["data-a"].id}", "${aws_subnet.this_data["data-b"].id}"]
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "memcached_subnet_group"
+    }
+  )
 }
 
 resource "aws_elasticache_cluster" "memcached_cluster" {
@@ -12,5 +19,12 @@ resource "aws_elasticache_cluster" "memcached_cluster" {
   port               = var.ec_memcached_port
   subnet_group_name  = aws_elasticache_subnet_group.memcached_subnet_group.name
   security_group_ids = [aws_security_group.sg_memcached.id]
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "memcached_cluster"
+    }
+  )
 }
 
